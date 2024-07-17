@@ -1,4 +1,4 @@
-import mongoose, { Model } from 'mongoose';
+import mongoose, { Document, Model } from 'mongoose';
 
 export interface UserI{    //UserI - User Interface
     firstName:String,

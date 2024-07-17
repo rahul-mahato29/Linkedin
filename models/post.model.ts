@@ -1,13 +1,13 @@
-import mongoose, { Model } from 'mongoose';
+import mongoose, { Document, Model } from 'mongoose';
 import { User, UserI } from './user.model';
-import { UserCircle } from 'lucide-react';
+import { CommentI } from './comment.model';
 
 export interface PostI{
     description:String,
     user:UserI,
     imageUrl?:string,
     likes?:string[],
-    comments?:any   //will update comment type after creating comment-model
+    comments?:CommentI[]
 }
 
 export interface postIDocument extends PostI, Document{
