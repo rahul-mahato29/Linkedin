@@ -9,11 +9,11 @@ export interface CommentI{
 export interface CommentIDocument extends CommentI, Document{
     createdAt: Date,
     updatedAt: Date
-}
+} 
 
 const commentSchema = new mongoose.Schema<CommentIDocument>({
     textMessage: {
-        type: String,
+        type: String, 
         requried: true
     },
     User: {
