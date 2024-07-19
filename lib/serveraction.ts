@@ -23,25 +23,31 @@ export const createPostAction = async (inputText:string, selectedFile:string) =>
     }
 
     const image = selectedFile;
-    const uploadResponse = await cloudinary.uploader.upload(image);
-
+    if(image){
+        console.log("checkpoint-1");
+    }
+    
     const userDetails: UserI = {
         firstName: user.firstName || "Rahul",
         lastName: user.lastName || "Mahato",
         userId: user.id,
         profilePhoto: user.imageUrl
     }
-
+    
+    let uploadResponse;
     try {
-        if(uploadResponse){
+        if(image){
+            console.log("check-point-2")
             //create post with image
+            uploadResponse = await cloudinary.uploader.upload(image);
             await Post.create({
                 description: inputText,
                 user: userDetails,
-                imageUrl: uploadResponse //from cloudinary
+                imageUrl: uploadResponse.url       //from cloudinary
             });
         }
         else{
+            console.log("Check-point-3")
             //create post with text only
             await Post.create({
                 description: inputText,
@@ -49,6 +55,6 @@ export const createPostAction = async (inputText:string, selectedFile:string) =>
             })
         }
     } catch (error:any) {
-        console.log("Something went wrong", error);
+        console.log("Something went wrong");
     }
 }
