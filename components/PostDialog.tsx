@@ -35,10 +35,14 @@ export function PostDialog({ setOpen, open, src }: { setOpen: any; open: any; sr
   const postActionHandler = async (formData:FormData) => {
     const inputText = formData.get('inputText') as string;
     try {
-      await createPostAction(inputText, selectedFile); 
+      await createPostAction(inputText, selectedFile);
     } catch (error) {
       console.log('Error Occurred', error);
     }
+
+    //clearing data from postDialog
+    setinputText("");
+    setOpen(false);
   }
 
   return (

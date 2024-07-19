@@ -45,9 +45,9 @@ const postSchema = new mongoose.Schema<postIDocument>({
     likes:{
         type:[String]
     },
-    comments:{
+    comments:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Comment'
-    }
+    }]
 },{timestamps:true});
 export const Post : Model<postIDocument> = mongoose.models.Post || mongoose.model<postIDocument>("Post", postSchema);

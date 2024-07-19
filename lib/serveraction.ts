@@ -4,6 +4,7 @@ import { UserI } from "@/models/user.model";
 import { currentUser } from "@clerk/nextjs/server"; 
 import {v2 as cloudinary} from 'cloudinary';
 import connectDB from "./db";
+import { connect } from "http2";
 
 // Configuration
 cloudinary.config({ 
@@ -12,6 +13,7 @@ cloudinary.config({
     api_secret: process.env.API_SECRET
 });  
 
+//creating post using server action
 export const createPostAction = async (inputText:string, selectedFile:string) => {
     await connectDB();
     const user = await currentUser();
@@ -23,9 +25,6 @@ export const createPostAction = async (inputText:string, selectedFile:string) =>
     }
 
     const image = selectedFile;
-    if(image){
-        console.log("checkpoint-1");
-    }
     
     const userDetails: UserI = {
         firstName: user.firstName || "Rahul",
@@ -37,7 +36,6 @@ export const createPostAction = async (inputText:string, selectedFile:string) =>
     let uploadResponse;
     try {
         if(image){
-            console.log("check-point-2")
             //create post with image
             uploadResponse = await cloudinary.uploader.upload(image);
             await Post.create({
@@ -47,7 +45,6 @@ export const createPostAction = async (inputText:string, selectedFile:string) =>
             });
         }
         else{
-            console.log("Check-point-3")
             //create post with text only
             await Post.create({
                 description: inputText,
@@ -56,5 +53,17 @@ export const createPostAction = async (inputText:string, selectedFile:string) =>
         }
     } catch (error:any) {
         console.log("Something went wrong");
+    }
+}
+
+
+//get all post using server action
+export const getAllPosts = async () => {
+    await connectDB();
+    try{
+        const posts = await Post.find().sort({createdAt: -1});   //sort a/c to recent post
+        return JSON.parse(JSON.stringify(posts));
+    } catch (error) {
+        console.log(error);
     }
 }

@@ -1,15 +1,17 @@
 import React from 'react'
 import PostInput from './PostInput';
-import Posts from './Posts';
+import AllPosts from './AllPosts';
+import { getAllPosts } from '@/lib/serveraction';
 
-const Feed = ({user}:{user:any}) => {
+const Feed = async ({user}:{user:any}) => {
 
   const userData = JSON.parse(JSON.stringify(user));  //directly we cannot send plain object from server component to client component.
+  const posts = await getAllPosts();
 
   return (
     <div className='flex-1'>
       <PostInput user={userData}/>
-      <Posts/>
+      <AllPosts posts={posts}/>
     </div>
   )
 }
