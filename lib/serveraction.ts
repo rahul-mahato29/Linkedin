@@ -5,6 +5,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import {v2 as cloudinary} from 'cloudinary';
 import connectDB from "./db";
 import { connect } from "http2";
+import { revalidatePath } from "next/cache";
 
 // Configuration
 cloudinary.config({ 
@@ -51,6 +52,7 @@ export const createPostAction = async (inputText:string, selectedFile:string) =>
                 user: userDetails
             })
         }
+        revalidatePath("/")
     } catch (error:any) {
         console.log("Something went wrong");
     }

@@ -14,14 +14,16 @@ const Post = ({post}:{post:postIDocument}) => {
     const fullName = post?.user?.firstName + " " + post?.user?.lastName;
 
   return (
-    <div className="bg-white my-2 rounded-lg border border-gray-300">
+    <div className="bg-white my-2 mx-2 md:mx-0 rounded-lg border border-gray-300">
       <div className="flex  justify-between p-4">
         <ProfileImage url={post?.user?.profilePhoto!} />
         <div className="flex items-center justify-between w-full ml-2">
           <div>
-            <h1 className="text-sm font-bold">{fullName} <Badge variant={'secondary'} className="ml-1">You</Badge></h1>
-            <p className="text-xs text-gray-500">@{"username"}</p>
-            <p className="text-xs text-gray-500">1hr ago</p>
+            <h1 className="text-sm font-bold cursor-pointer">{fullName} <Badge variant={'secondary'} className="ml-1">You</Badge></h1>
+            <p className="text-xs text-gray-500 lowercase">@{post?.user?.firstName}_{post?.user?.lastName}</p>
+            <p className="text-xs text-gray-500">
+                1hr
+            </p>
           </div>
         </div>
         <div>
