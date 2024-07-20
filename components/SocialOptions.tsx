@@ -1,9 +1,25 @@
+import { MessageCircleMore, Repeat, Send, ThumbsUp } from "lucide-react";
+import { Button } from "./ui/button";
+
 const SocialOptions = () => {
     return (
-        <div className="flex justify-between items-center p-5">
-            <h2 className="font-bold text-sm">Like</h2>
-            <h2 className="font-bold text-sm">Comment</h2>
-            <h2 className="font-bold text-sm">Report</h2>
+        <div className="flex justify-between items-center m-3">
+            <Button variant={'ghost'}>
+                <ThumbsUp/>
+                <p>Like</p>
+            </Button>
+            <Button variant={'ghost'}>
+                <MessageCircleMore/>
+                <p>Message</p>
+            </Button>
+            <Button variant={'ghost'}>
+                <Repeat/>
+                <p>Repost</p>
+            </Button>
+            <Button variant={'ghost'}>
+                <Send/>
+                <p>Send</p>
+            </Button>
         </div>
     )
 }
