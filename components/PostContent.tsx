@@ -6,7 +6,7 @@ const PostContent = ({post}:{post:postIDocument}) => {
         <div className="my-3">
            <p className="my-3 px-4">{post?.description}</p>
            { 
-            post?.imageUrl ? <Image src={post?.imageUrl} alt="post-image" width={50} height={50}/> : ""
+            post?.imageUrl ? <Image src={post?.imageUrl} alt="post-image" width={500} height={500} className="w-full mx-auto"/> : ""
            }
         </div>
     )

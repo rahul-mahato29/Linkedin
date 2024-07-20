@@ -42,7 +42,7 @@ export const createPostAction = async (inputText:string, selectedFile:string) =>
             await Post.create({
                 description: inputText,
                 user: userDetails,
-                imageUrl: uploadResponse.url       //from cloudinary
+                imageUrl: uploadResponse.secure_url       //from cloudinary
             });
         }
         else{

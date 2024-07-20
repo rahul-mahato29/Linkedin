@@ -69,12 +69,10 @@ export function PostDialog({ setOpen, open, src }: { setOpen: any; open: any; sr
             </div> 
         <DialogFooter>
             <input ref={inputRef} onChange={fileChangeHandler} type="file" className="hidden" name="image" accept="image/*" />
+            <Button type="submit">Post</Button>
         </DialogFooter>
-        <div className="flex items-center justify-between">
-          <Button onClick={() => inputRef?.current?.click()} variant={'link'} className="p-0 m-0"><Images className="text-blue-500"/></Button>
-          <Button type="submit">Post</Button>
-        </div>
         </form>
+          <Button onClick={() => inputRef?.current?.click()} variant={'outline'} className="p-0 m-0"><Images className="text-blue-500"/>Media</Button>
       </DialogContent>
     </Dialog>
   );
