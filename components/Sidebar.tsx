@@ -25,7 +25,7 @@ const Sidebar = ({user}:{user:any}) => {
           <div className='border-b border-b-gray-300 w-full mt-10 p-3'>
               <div className='text-center'>
                   <h1 className='font-bold cursor-pointer'>{user ? `${user?.firstName} ${user?.lastName}` : "Rahul Mahato"}</h1>
-                  <p className='text-xs text-gray-600'>Application Development Associate @ Accenture | SXC'23, Information Technology | Passionate Learner | Problem Solver</p>
+                  <p className='text-xs text-gray-600'>Associate Software Engineer @Accenture | Full Stack Developer |SXC'23, Information Technology</p>
               </div>
           </div>
           <div className='w-full p-4 border-b border-b-gray-300'>

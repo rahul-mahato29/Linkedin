@@ -4,7 +4,6 @@ import { UserI } from "@/models/user.model";
 import { currentUser } from "@clerk/nextjs/server"; 
 import {v2 as cloudinary} from 'cloudinary';
 import connectDB from "./db";
-import { connect } from "http2";
 import { revalidatePath } from "next/cache";
 
 // Configuration
@@ -67,5 +66,25 @@ export const getAllPosts = async () => {
         return JSON.parse(JSON.stringify(posts));
     } catch (error) {
         console.log(error);
+    }
+}
+
+// delete post by id
+export const deletePost = async (postId: any) => {
+    await connectDB();
+    const user = await currentUser();
+    if(!user) throw new Error('User not authenticated');
+    const post = await Post.findById(postId);
+    if(!post) throw new Error('Post not found');
+
+    if(post.user.userId != user.id){
+        throw new Error("You are not allowed to delete this post");
+    }
+
+    try {
+        await Post.deleteOne({_id: postId});
+        revalidatePath("/");    
+    } catch (error:any) {
+        throw new Error('An error occurred', error);
     }
 }
