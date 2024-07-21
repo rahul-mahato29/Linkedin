@@ -1,38 +1,47 @@
-import mongoose, { Document, Model } from "mongoose";
-import { UserI } from "./user.model";
+import mongoose, { Document, Model, Schema } from "mongoose";
+import { UserI } from "./user.model"; // Ensure this path is correct
 
-export interface CommentI{
-    textMessage:String,
-    User:UserI
+// Interface for Comment
+export interface CommentI {
+    textMessage: string;
+    User: {
+        userId: string;
+        firstName: string;
+        lastName: string;
+        profilePhoto?: string;
+    };
 }
 
-export interface CommentIDocument extends CommentI, Document{
-    createdAt: Date,
-    updatedAt: Date
-} 
+// Interface for Comment document, including Mongoose Document properties
+export interface CommentIDocument extends CommentI, Document {
+    createdAt: Date;
+    updatedAt: Date;
+}
 
-const commentSchema = new mongoose.Schema<CommentIDocument>({
+// Schema for Comment
+const commentSchema = new Schema<CommentIDocument>({
     textMessage: {
-        type: String, 
-        requried: true
+        type: String,
+        required: true
     },
     User: {
-        userId:{
-            type:String,
-            requried:true
-        },
-        firstName:{
-            type:String,
-            required:true
-        },
-        lastName:{
-            type:String,
+        userId: {
+            type: String,
             required: true
         },
-        profilePhoto:{
-            type:String,
-            requried:true
+        firstName: {
+            type: String,
+            required: true
+        },
+        lastName: {
+            type: String,
+            required: true
+        },
+        profilePhoto: {
+            type: String
         }
     }
-}, {timestamps: true});
-export const Comment: Model<CommentIDocument> = mongoose.models.comment || mongoose.model<CommentIDocument>("Comment", commentSchema);
+}, { timestamps: true });
+
+// Define the model, ensuring it is not overwritten
+export const Comment: Model<CommentIDocument> = mongoose.models.Comment || mongoose.model<CommentIDocument>("Comment", commentSchema);

@@ -5,6 +5,9 @@ import { currentUser } from "@clerk/nextjs/server";
 import {v2 as cloudinary} from 'cloudinary';
 import connectDB from "./db";
 import { revalidatePath } from "next/cache";
+import { PostDialog } from "@/components/PostDialog";
+import { Comment } from "@/models/comment.model";
+import { createDialogScope } from "@radix-ui/react-dialog";
 
 // Configuration
 cloudinary.config({ 
@@ -62,7 +65,8 @@ export const createPostAction = async (inputText:string, selectedFile:string) =>
 export const getAllPosts = async () => {
     await connectDB();
     try{
-        const posts = await Post.find().sort({createdAt: -1});   //sort a/c to recent post
+        const posts = await Post.find().sort({createdAt: -1}).populate({path:'comments', options:{sort:{createAt: -1}}});   //sort a/c to recent post
+        if(!posts) return [];
         return JSON.parse(JSON.stringify(posts));
     } catch (error) {
         console.log(error);
@@ -86,5 +90,39 @@ export const deletePost = async (postId: any) => {
         revalidatePath("/");    
     } catch (error:any) {
         throw new Error('An error occurred', error);
+    }
+}
+
+
+export const createCommentAction = async (postId:any, formData:FormData) => {
+    try {
+        const user = await currentUser();
+        if(!user) throw new Error("User not authenticated");
+        const inputText = formData.get('inputText') as string;
+        if(!inputText) throw new Error("Field is required");
+        if(!postId) throw new Error("post id requried");
+
+        const userData : UserI = {
+            firstName: user.firstName || 'Rahul',
+            lastName: user.lastName || 'Mahato',
+            userId: user.id,
+            profilePhoto: user.imageUrl
+        }
+
+        const post = await Post.findById({_id: postId});
+        if(!post) throw new Error('Post not found');
+
+        const comment = await Comment.create({
+            textMessage: inputText,
+            user:userData,
+        });
+
+        post.comments?.push(comment.id);
+        await post.save();
+
+        revalidatePath("/");
+
+    } catch (error) {
+        throw new Error('An error occurred');
     }
 }

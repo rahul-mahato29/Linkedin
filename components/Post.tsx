@@ -40,7 +40,7 @@ const Post = ({ post }: { post: postIDocument }) => {
         </div>
       </div>
       <PostContent post={post} />
-      <SocialOptions />
+      <SocialOptions post={post} />
     </div>
   );
 };
