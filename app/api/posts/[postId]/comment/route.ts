@@ -3,7 +3,7 @@ import { Post } from "@/models/post.model";
 import { NextRequest, NextResponse } from "next/server";
 
 //fetch all comments
-export const Get = async (req:NextRequest, {params}:{params:{postId:String}}) => {
+export const GET = async (req:NextRequest, {params}:{params:{postId:String}}) => {
     try {
         await connectDB();  
         const post = Post.findById({_id:params.postId});
