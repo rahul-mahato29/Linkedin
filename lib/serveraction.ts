@@ -6,7 +6,7 @@ import {v2 as cloudinary} from 'cloudinary';
 import connectDB from "./db";
 import { revalidatePath } from "next/cache";
 import { PostDialog } from "@/components/PostDialog";
-import { Comment } from "@/models/comment.model";
+import { Comment, CommentI } from "@/models/comment.model";
 import { createDialogScope } from "@radix-ui/react-dialog";
 
 // Configuration
@@ -114,10 +114,9 @@ export const createCommentAction = async (postId:any, formData:FormData) => {
 
         const comment = await Comment.create({
             textMessage: inputText,
-            user:userData,
+            User:userData,
         });
-
-        post.comments?.push(comment.id);
+        post.comments?.push(comment._id as unknown as CommentI);
         await post.save();
 
         revalidatePath("/");

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { postIDocument } from "@/models/post.model";
 import { useUser } from "@clerk/nextjs";
 import { CommentInput } from "./CommentInput";
-import { Comment } from "./comment";
+import { Comment } from "./Comment";
 
 const SocialOptions = ({ post }: { post: postIDocument }) => {
   const { user } = useUser();
